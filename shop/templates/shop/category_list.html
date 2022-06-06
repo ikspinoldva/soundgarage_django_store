@@ -1,0 +1,17 @@
+{% extends 'shop/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        {% for category in object_list %}
+        <div class="col-lg-4">
+            <a href="{{ category.get_absolute_url }}"><img class="thumbnail" src="{{ category.image_url }}"></a>
+            <div class="box-element product">
+                <h6><strong>{{ category.name }}</strong></h6>
+                <hr>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+

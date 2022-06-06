@@ -7,9 +7,6 @@ import json
 import datetime
 
 
-
-
-
 class ProductDetail(DetailView):
     model = Product
 
@@ -20,9 +17,7 @@ class ProductDetail(DetailView):
         items = data['items']
 
         return super().get_context_data(
-            cart_items=cart_items,) 
- 
-
+            cart_items=cart_items,)
 
 
 class ProductListView(ListView):
@@ -36,8 +31,7 @@ class ProductListView(ListView):
         data = cart_data(self.request)
         cart_items = data['cart_items']
         order = data['order']
-        items = data['items'] 
- 
+        items = data['items']
 
         return super().get_context_data(
             object_list=queryset,
@@ -60,7 +54,6 @@ class Home(ListView):
             object_list=queryset,
             cart_items=cart_items,
             )
-
 
 
 def cart(request):
@@ -109,7 +102,6 @@ def update_item(request):
     return JsonResponse('Item was added', safe=False)
 
 
-
 def process_order(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
@@ -128,7 +120,7 @@ def process_order(request):
         order.complete = True
     order.save()
 
-    if order.shipping == True:
+    if order.shipping:
         ShippingAddress.objects.create(
             customer=customer,
             order=order,
@@ -139,6 +131,4 @@ def process_order(request):
             country=data['shipping']['country']
             )
 
-
-
-    return JsonResponse('Payment complete', safe=False)
+    return JsonResponse('Payment complete', safe=False) #

@@ -17,21 +17,16 @@ class Category(models.Model):
     slug = models.SlugField(max_length=200, db_index=True, unique=True)
     image = models.ImageField(null=True, blank=True)
 
-
     class Meta:
         ordering = ('name',)
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
-
-
     def __str__(self):
         return self.name
 
-
     def get_absolute_url(self):
         return reverse('product_list', kwargs={"slug":self.slug})
-
 
     @property
     def image_url(self):
@@ -54,19 +49,15 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
     
     class Meta:
         ordering = ('name',)
 
-
     def __str__(self):
         return self.name
 
-
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={"slug":self.slug})
-
+        return reverse('product_detail', kwargs={"slug": self.slug})
 
     @property
     def image_url(self):
@@ -75,7 +66,6 @@ class Product(models.Model):
         except:
             url = ''
         return url
-
 
 
 class Order(models.Model):
@@ -87,7 +77,6 @@ class Order(models.Model):
     def __str__(self):
         return str(self.pk)
 
-
     @property
     def shipping(self):
         shipping = False
@@ -95,8 +84,7 @@ class Order(models.Model):
         for i in orderitems:
             if not i.product.digital:
                 shipping = True
-        return shipping 
-
+        return shipping
 
     @property
     def get_cart_total(self):
@@ -134,4 +122,4 @@ class ShippingAddress(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.address
+        return self.address #
